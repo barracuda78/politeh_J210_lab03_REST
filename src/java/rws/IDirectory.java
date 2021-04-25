@@ -1,4 +1,3 @@
-
 package rws;
 
 import java.util.List;
@@ -10,22 +9,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-/**
- * Интерфейс определяет методы для работы с каталогами сервера.
- * @author Ю.Д.Заковряшин, 2018-2020.
- */
 public interface IDirectory {
-        /**
-         * Перечисление определяет тип элемента каталога.
-         */
+
         public static enum Type {
-            /**
-             * Определяет каталог
-             */
             DIRECTORY,
-            /**
-             * Определяет файл
-             */
             FILE;
         }
 
@@ -60,8 +47,13 @@ public interface IDirectory {
          */
         @GET
         @Path("find/{directory}")
-        @Produces(MediaType.TEXT_HTML)
-        public String findFile(
-                    @PathParam("directory") String dirName,
-                    @QueryParam("file") String fileName);
+        //@Produces(MediaType.TEXT_HTML)
+        @Produces("text/html")
+        public String findFile(@PathParam("directory") String dirName, @QueryParam("file") String fileName);
+        
+        @GET
+        @Path("findall/{directory}")
+        //@Produces(MediaType.TEXT_HTML)
+        @Produces("text/html")
+        public String findAll(@PathParam("directory") String dirName);
 }
