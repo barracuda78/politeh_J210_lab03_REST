@@ -1,12 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,53 +13,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import rws.IDirectory;
+import rws.MyClass;
 import rws.ReturnData;
+import rws.Walker;
 
-/**
- *
- * @author ENVY
- */
 @WebServlet(name = "DemoRS", urlPatterns = {"/DemoRS"})
 public class DemoRS extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         
+        Client client = ClientBuilder.newClient();
+        
         String button = request.getParameter("showDir");
         String directory = request.getParameter("directory");
-        
-        if(directory.trim().isEmpty() || directory == null){
-            directory = "?default?";
-        }
-        
-        Client client = ClientBuilder.newClient();
+        String deep = request.getParameter("deep");
         String result = null;
         String fragment = null;
-        String flag = null;
+        String regexp = null;   
         
-        if(button != null){
-            System.out.println("Вариант = показать файлы = для " + directory);
+        if(directory.trim().isEmpty()){
+            directory = "default";
+        }
+
+        if(button != null && deep == null){
             result = client.target("http://localhost:8080/j210lab03RS/webresources/dir/")
                     .path("{directory}")
                     .resolveTemplate("directory", directory)
                     .request()
                     .get(String.class);
-        }else{
+        }
+        else if(button != null && deep != null){
+            result = client.target("http://localhost:8080/j210lab03RS/webresources/dir/findall/")
+                    .path("{directory}")
+                    .resolveTemplate("directory", directory)
+                    .request()
+                    .get(String.class);
+            System.out.println("!!!result!!!" + result);
+        }
+        else{
             fragment = request.getParameter("fragment");
-            flag = request.getParameter("regexp");
-            System.out.println("Вариант = найти файл = по " + fragment +"  в " + directory);
-            result = client.target("http://localhost:8080/j210lab03RS/webresources/dir/find")
+            regexp = request.getParameter("regexp");
+            System.out.println("Найти файл = по фрагменту: " + fragment + " в каталоге:" + directory);
+            result = client.target("http://localhost:8080/j210lab03RS/webresources/dir/find/")
                     .path("{directory}")
                     .resolveTemplate("directory", directory)
                     .queryParam("file", fragment)     ///---------------добавлять сюда параметры по цепочке
@@ -69,26 +67,36 @@ public class DemoRS extends HttpServlet {
         }
         
         //теперь найдем объект нашего класса RetrunData
-        ReturnData rd = client.target("http://localhost:8080/j210lab03RS/webresources/dir/")
-                    .request().get(ReturnData.class);
+//        ReturnData dr = client.target("http://localhost:8080/j210lab03RS/webresources/dir/")
+//                              .request()
+//                              .get(ReturnData.class);
         
+//        Walker walker = client.target("http://localhost:8080/j210lab03RS/webresources/dir/")
+//                                .request()
+//                                .get(Walker.class);
+        
+        String myDate = client.target("http://localhost:8080/j210lab03RS/webresources/dir/hello/")
+                                .request()
+                                .get(String.class);
+
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet DemoRS</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DemoRS at " + request.getContextPath() + "</h1>");
-            out.println("<h1>CAll fragment = " + fragment + ", flag = " + flag + "</h1>");
-            out.println("<h1>CAll result = " + result + "</h1>");
-            out.println("<h1>=== ReturnData object: check ===</h1>");
-            out.println("<h1>=== ReturnData object: check ===" + rd.toString() + "</h1>");
+            out.println("<h1>Servlet DemoRS</h1>");
+            out.println("<h2>Call fragment = " + fragment + ", flag = " + regexp + "</h2>");
+            out.println("<h2>Call result = " + result + "</h2>");
+            //out.println("<h3>ReturnData object check = " + dr.toString() + "</h3>");
+            //out.println("<h3>Walker object check = " + walker.walkerToHtmlString() + "</h3>");
+            out.println("<h3>Date check = " + myDate + "</h3>");
             out.println("</body>");
             out.println("</html>");
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

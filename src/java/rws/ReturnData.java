@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //это просто класс. Сами прописали аннотацию.
 
 @XmlRootElement
-public class ReturnData implements Serializable {
+public class ReturnData  { //implements Serializable
     private String name;
     private String family;
     private int age;
