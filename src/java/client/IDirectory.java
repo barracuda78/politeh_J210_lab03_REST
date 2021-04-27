@@ -1,5 +1,6 @@
-package rws;
+package client;
 
+import rws.*;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.GET;
@@ -64,7 +65,7 @@ public interface IDirectory {
         @Path("find/{directory}")
         //@Produces(MediaType.TEXT_HTML)
         @Produces("text/html")
-        public Walker findFile(@PathParam("directory") String dirName, @QueryParam("file") String fileName);
+        public String findFile(@PathParam("directory") String dirName, @QueryParam("file") String fileName);
         
         @GET
         @Path("findall/{directory}")
@@ -76,10 +77,5 @@ public interface IDirectory {
         @GET
         @Path("{directory}")
         @Produces(MediaType.APPLICATION_XML)
-        public Walker getMappedContent(@PathParam("directory") String dirName);
-        
-        @GET
-        @Path("findRegexp/{directory}") 
-        @Produces(MediaType.APPLICATION_XML)
-        public Walker findFileRegexp(@PathParam("directory") String dirName, @QueryParam("file")String fileName, @QueryParam("regexp")String regexp);
+        public Map<String, Type> getMappedContent(@PathParam("directory") String dirName);
 }

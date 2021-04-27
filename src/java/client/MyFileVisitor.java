@@ -1,5 +1,6 @@
-package rws;
+package client;
 
+import rws.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -24,8 +25,10 @@ class MyFileVisitor extends SimpleFileVisitor<Path> implements Serializable{
         this.map = map;
         this.fileEntries = fileEntries;
     }
+    
 
     private String dashesMaker(Path filePath){
+
         int count = filePath.getNameCount();
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < count; i++){
@@ -36,37 +39,33 @@ class MyFileVisitor extends SimpleFileVisitor<Path> implements Serializable{
 
     @Override
     public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) throws IOException {
-
         IDirectory.Type type = null;
         if (!Files.isDirectory(filePath)) {
             type = IDirectory.Type.FILE;
         }else if(Files.isDirectory(filePath)){
             type = IDirectory.Type.DIRECTORY;
         }
-
         map.put(filePath.toString(), type);
 
-        //fileEntries.add(createFileEntry(filePath));
+        fileEntries.add(createFileEntry(filePath));
         return FileVisitResult.CONTINUE;
     }
 
     @Override
     public FileVisitResult postVisitDirectory(Path filePath, IOException exc) throws IOException {
-
         IDirectory.Type type = null;
         if (!Files.isDirectory(filePath)) {
             type = IDirectory.Type.FILE;
         }else if(Files.isDirectory(filePath)){
             type = IDirectory.Type.DIRECTORY;
         }
-        
         map.put(filePath.toString(), type);
-
         //return FileVisitResult.CONTINUE;
-        //fileEntries.add(createFileEntry(filePath));
+        
+        fileEntries.add(createFileEntry(filePath));
+        
         return super.postVisitDirectory(filePath, exc); //To change body of generated methods, choose Tools | Templates.
     }
-   
     
     private FileEntry createFileEntry(Path filePath){
         IDirectory.Type type = null;

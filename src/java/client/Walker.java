@@ -1,5 +1,6 @@
-package rws;
+package client;
 
+import rws.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -17,16 +18,18 @@ import java.util.logging.Logger;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Walker implements Walkable{
+public class Walker {
     public static final String HOME_DIR = "D:/barracuda/";
     File sourceFolder = new File(DirResource.HOME_DIR);
-    Map<String, IDirectory.Type> map = new LinkedHashMap<>();
+    private  Map<String, IDirectory.Type> map = new LinkedHashMap<>();
     List<FileEntry> fileEntries = new ArrayList<>();
-
+    String fragment;
+    
     public Walker() {
 
     }
 
+    
     void setSourceFolder(String dirName) {
         sourceFolder = new File(dirName);
     }
@@ -50,9 +53,6 @@ public class Walker implements Walkable{
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-        //------------testimg
-        //System.out.println(mapToString(map, sourceFolder.toString()));
-        //-----------end of testing
         return map;
     }
     
@@ -74,6 +74,14 @@ public class Walker implements Walkable{
     
     public void setMap(Map<String, IDirectory.Type> map) {
         this.map = map;
+    }
+    
+    public String getFragment() {
+        return fragment;
+    }
+
+    public void setFragment(String fragment) {
+        this.fragment = fragment;
     }
 
     public List<FileEntry> getFileEntries() {
@@ -110,24 +118,34 @@ public class Walker implements Walkable{
         return sb.toString();
     }
     
-    private String mapToString(Map<String, IDirectory.Type> map, String dirName){
-        StringBuilder sb = new StringBuilder();
-        sb.append("<h3>Directory \"" + dirName + "\" contains: </h3><ul>");
-
-        if(map == null || map.isEmpty()){
-            return "<p1>No content found for resource: " + dirName + "</p1><br><p1>Probably \"" + dirName + "\" doesn't exist.</p1>";
-        }
-        
-        for(Map.Entry<String, IDirectory.Type> pair : map.entrySet())  {
-            sb.append("<li>");
-            sb.append(pair.getKey());
-            sb.append(" : ");
-            sb.append(pair.getValue());
-            sb.append("</li>");
-        }
-        sb.append("</ul></p1>");
-        return sb.toString();
-    }
+    //testing-------------------------------------
+        //метод из DirResourse:
+//        public static String findAll(String dirName) {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("<p1>ВОТ ОНО Ж<ul>\n");
+//        Walker walker = new Walker();
+//        Map<String, IDirectory.Type> map2 = walker.walkDontRun();
+//        for(Map.Entry<String, IDirectory.Type> pair : map2.entrySet())  {
+//            sb.append("<li>\n");
+//            sb.append(pair.getKey());
+//            sb.append(" : ");
+//            sb.append(pair.getValue());
+//            sb.append("</li>");
+//        }
+//        sb.append("</ul></p1>");
+//        return sb.toString();
+//    }
+//    
+//    public static void main(String[] args) {
+//        String HOME_DIR = "D:\\barracuda\\";
+//        String s = findAll(HOME_DIR);
+//        System.out.println("ВЫВОД ТЕСТА: " + s);
+//    }
     
+    //end of testing ==============================
+
+
+
+
 }
 
