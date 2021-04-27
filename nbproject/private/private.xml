@@ -3,18 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/client/DemoRS.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/web/index.jsp</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/DirResource.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/Walker.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/MyClass.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/client/Walkable.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/IDirectory.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/ReturnData.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/MyFileVisitor.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/Walkable.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/FileSelector.java</file>
-            <file>file:/C:/Users/ENVY/Documents/NetBeansProjects/j210lab03RS/src/java/rws/ApplicationConfig.java</file>
+            <file>file:/D:/coding/politeh/j210lab03RS/src/java/client/DemoRS.java</file>
+            <file>file:/D:/coding/politeh/j210lab03RS/web/index.jsp</file>
+            <file>file:/D:/coding/politeh/j210lab03RS/src/java/rws/FileEntry.java</file>
         </group>
     </open-files>
 </project-private>
